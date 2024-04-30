@@ -4,10 +4,10 @@ using namespace std;
 // definicao de tipo
 struct NO {
   int valor;
-  NO *prox;
+  NO* prox;
 };
 
-NO *topo = NULL;
+NO* topo = NULL;
 
 // headers
 void menu();
@@ -16,30 +16,34 @@ void pop();
 void push();
 //--------------------------
 
-int main() { menu(); }
 
-void menu() {
+int main()
+{
+  menu();
+}
+
+void menu()
+{
   int op = 0;
   while (op != 4) {
-    cout << "\n\nMenu Pilha";
+    cout << "Menu Pilha";
     cout << endl << endl;
     cout << "1 - Inicializar Pilha \n";
     cout << "2 - Inserir elemento (Push) \n";
     cout << "3 - Remover elementos (Pop) \n";
     cout << "4 - Sair \n";
 
+
     cout << "Opcao: ";
     cin >> op;
 
-    switch (op) {
-    case 1:
-      inicializar();
+    switch (op)
+    {
+    case 1: inicializar();
       break;
-    case 2:
-      push();
+    case 2:push();
       break;
-    case 3:
-      pop();
+    case 3: pop();
       break;
     case 4:
       return;
@@ -49,45 +53,58 @@ void menu() {
   }
 }
 
-void inicializar() {
+void inicializar()
+{
 
   // se a lista já possuir elementos
   // libera a memoria ocupada
-  NO *aux = topo;
+  NO* aux = topo;
   while (aux != NULL) {
-    NO *paraExcluir = aux;
+    NO* paraExcluir = aux;
     aux = aux->prox;
     free(paraExcluir);
   }
 
   topo = NULL;
   cout << "Pilha inicializada \n";
+
 }
 
-void push() {
+
+void push()
+{
   // aloca memoria dinamicamente para o novo elemento
-  NO *novo = (NO *)malloc(sizeof(NO));
-  if (novo == NULL) {
+  NO* novo = (NO*)malloc(sizeof(NO));
+  if (novo == NULL)
+  {
+    cout << "Digite o elemento: ";
+    cin >> novo->valor;
+    novo->prox = NULL;
     return;
   }
+  else {
+    cout << "Digite o elemento: ";
+    cin >> novo->valor;
+    novo->prox = topo; 
+    topo = novo; 
 
-  cout << "Digite o elemento: ";
-  cin >> novo->valor;
-  novo->prox = NULL;
+    return;
+  } 
 }
 
-void pop() {
-  // puxa o primeiro elemento da pilha
-  NO *aux = topo;
 
-  // se estiver vazio, imprime lista vazia
-  while (topo != NULL) {
-    // remove o elemento
+
+void pop()
+{
+  {
+  if (topo != NULL) {
+    NO* paraExcluir = topo;
     topo = topo->prox;
-    // libera a memoria
-    free(aux);
-    cout << "Elemento removido" << endl;
+    cout << "Elemento removido: " << paraExcluir->valor << endl;
+    free(paraExcluir);
   }
-  cout << "Pilha vazia." << endl;
-  return;
+  else {
+    cout << "Pilha Vazia" << endl;
+  }
+}
 }
